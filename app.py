@@ -43,6 +43,13 @@ def login():
         if not (password and username):
         
             return error("404","Username or Password not provided")
+        data = db.execute("SELECT * FROM users WHERE username LIKE ?;",username)
+        if len(data) != 1 or not check_password_hash(data[0]["hash"],password):
+            return error("invalid username or password","400")
+        session["user_id"] = data[0]["id"]
+
+        return redirect("/")
+
 
     return render_template("login.html")
 
