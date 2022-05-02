@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block main%}
+<div id="header" class="row text-center p-2 mb-5">
+    <h1 class="text-white">To Watch</h1>
+</div>
+{% for row in data %}
+<div class="card" style="width: 18rem; height: 25rem;">
+    <img src="{{row.image}}" class="card-img-top" alt="..." height="50%" width="16rem">
+    <div class="card-body">
+        <h5 class="card-title">{{row.title}}</h5>
+        <p class="card-text">{{row.description}}</p>
+        <form action="/add" method="post">
+            <input name="user_id" type="hidden" value="{{row.id}}" >
+            <input name="id" type="hidden" value="{{row.id}}" >
+            <button class="btn btn-primary">Add</button>
+        </form>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

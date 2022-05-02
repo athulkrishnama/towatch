@@ -1,11 +1,14 @@
 from crypt import methods
+from pydoc import resolve
 from sys import flags
+from urllib import response
 from cs50 import  SQL
 from flask import Flask,redirect, render_template, request, session
 from flask_session import Session
 from werkzeug.security import check_password_hash, generate_password_hash
 from helpers import login_required,error
-
+import requests
+import os
 # configure application
 
 app = Flask(__name__)
@@ -25,10 +28,22 @@ Session(app)
 db = SQL("sqlite:///user.db")
 
 
-@app.route("/")
+@app.route("/",methods=["POST","GET"])
 @login_required
 def index():
-    return render_template("index.html")
+    if request.method == "POST":
+        title=request.form.get("title")
+        try:
+            api_key = os.environ.get("API_KEY")
+            url = f"https://imdb-api.com/en/API/SearchMovie/{api_key}/{title}"
+            response = requests.get(url)
+            data = response.json()
+            
+            return render_template("results.html",data = data["results"])
+        except:
+            return "None"
+    data = db.execute("SELECT DISTINCT(titleid) FROM list WHERE id LIKE ?;",session["user_id"])
+    return render_template("index.html",data=data)
 
 
 @app.route("/login",methods=["GET","POST"])
@@ -74,3 +89,10 @@ def register():
         return redirect("/login")
     return render_template("register.html")
 
+
+@app.route("/add",methods=["POST"])
+def add():
+    title = request.form.get("id")
+    user_id = session["user_id"]
+    db.execute("INSERT INTO list (id ,titleid) VALUES(?,?);",user_id,title)
+    return redirect("/")
