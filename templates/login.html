@@ -1,7 +1,12 @@
 {% extends "layout.html" %}
 {% block main %}
-    <div id="header" class="container-fluid text-center p-2 mb-5">
-        <h1 class="text-white">To Watch</h1>
+    <div id="header" class="row container-fluid text-center p-2 mb-5">
+        <div class="col-sm-10">
+          <h1 class="text-white">To Watch</h1>
+        </div>
+        <div class="col-sm-2">
+          <a href="/register" style="color: white;text-decoration: none;">register</a>
+        </div>
     </div>
     <div class="container align-items-center p-5" >
         <form action="/login" method="post" >

@@ -1,8 +1,14 @@
 {% extends "layout.html" %}
 {% block main %}
 <div id="header" class="row text-center p-2 mb-5">
-    <h1 class="text-white">To Watch</h1>
+    <div class="col-sm-10">
+        <h1 class="text-white">To Watch</h1>
+    </div>
+    <div class="col-sm-2">
+        <a style="color: white;text-decoration: none;" href="/login">Log out</a>
+    </div>
 </div>
+
 <form action="/" method="post">
     <input type="text" name="title"> 
     <button type="submit" class="btn btn-primary">Search</button>
