@@ -9,8 +9,13 @@
 </form>
 <div class="row">
     {% for row in data %}
-        <p>{{row}}</p>
-
+    <div class="card" style="width: 18rem;">
+        <img class="card-img-top" src="{{row.image}}" alt="Card image cap">
+        <div class="card-body">
+          <p class="card-text">{{row.title}}</p>
+          <p class="card-text">{{row.year}}</p>
+        </div>
+      </div>
     {% endfor %}
 </div>
 {% endblock %}

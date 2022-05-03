@@ -43,7 +43,18 @@ def index():
         except:
             return "None"
     data = db.execute("SELECT DISTINCT(titleid) FROM list WHERE id LIKE ?;",session["user_id"])
-    return render_template("index.html",data=data)
+    movies = []
+    for row in data:
+        id = row["titleid"]
+        api_key = os.environ.get("API_KEY")
+        movie = requests.get(f"https://imdb-api.com/en/API/Title/{api_key}/{id}")
+        moviedata = movie.json()
+        title = moviedata["title"]
+        image = moviedata["image"]
+        year = moviedata["year"]
+        dic = {"id":id,"title":title,"image":image,"year":year}
+        movies.append(dic)
+    return render_template("index.html",data=movies)
 
 
 @app.route("/login",methods=["GET","POST"])
