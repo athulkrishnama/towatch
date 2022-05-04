@@ -8,11 +8,13 @@
         <a style="color: white;text-decoration: none;" href="/login">Log out</a>
     </div>
 </div>
-
-<form action="/" method="post">
-    <input type="text" name="title"> 
-    <button type="submit" class="btn btn-primary">Search</button>
-</form>
+<div class="container">
+    
+    <form action="/" method="post">
+        <input type="text" name="title">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </form>
+</div>
 <div class="row">
     {% for row in data %}
     <div class="card" style="width: 18rem;">

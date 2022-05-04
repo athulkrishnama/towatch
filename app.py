@@ -68,7 +68,7 @@ def login():
 
         if not (password and username):
         
-            return error("404","Username or Password not provided")
+            return error("Username or Password not provided","404")
         data = db.execute("SELECT * FROM users WHERE username LIKE ?;",username)
         if len(data) != 1 or not check_password_hash(data[0]["hash"],password):
             return error("invalid username or password","400")
@@ -90,9 +90,9 @@ def register():
             return error("some data is missing","400")
         data = db.execute("SELECT username FROM users WHERE username LIKE ?; ",username)
         if len(data) != 0:
-            return error("",code="user already exist")
+            return error(code="402",message="user already exist")
         if password != confirm:
-            return error("",code = " passwords doesnt match")
+            return error(code = "402",message = " passwords doesnt match")
         
         hash = generate_password_hash(password)
         # Insert into Database
